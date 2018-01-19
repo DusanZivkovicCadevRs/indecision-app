@@ -10,8 +10,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _ref = _jsx('h1', {}, void 0, 'Counter: ');
-
 var Counter = function (_React$Component) {
     _inherits(Counter, _React$Component);
 
@@ -23,28 +21,44 @@ var Counter = function (_React$Component) {
         _this.handleAddOne = _this.handleAddOne.bind(_this);
         _this.handleMinusOne = _this.handleMinusOne.bind(_this);
         _this.handleReset = _this.handleReset.bind(_this);
+
+        // setup default state
+        _this.state = {
+            count: 0
+        };
         return _this;
     }
 
     _createClass(Counter, [{
         key: 'handleAddOne',
         value: function handleAddOne(props) {
-            console.log('handleAddOne click event');
+            // console.log('handleAddOne click event')
+            this.setState(function (oldState) {
+                return {
+                    count: oldState.count + 1
+                };
+            });
         }
     }, {
         key: 'handleMinusOne',
         value: function handleMinusOne(props) {
-            console.log('handleMinusOne click event');
+            // console.log('handleMinusOne click event');
+            this.setState(function (oldState) {
+                return {
+                    count: oldState.count - 1
+                };
+            });
         }
     }, {
         key: 'handleReset',
         value: function handleReset(props) {
-            console.log('handleReset click event');
+            // console.log('handleReset click event');
+            this.setState({ count: 0 });
         }
     }, {
         key: 'render',
         value: function render() {
-            return _jsx('div', {}, void 0, _ref, _jsx('button', {
+            return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, 'Counter: ', this.state.count), _jsx('button', {
                 onClick: this.handleAddOne
             }, void 0, '+1'), _jsx('button', {
                 onClick: this.handleMinusOne
