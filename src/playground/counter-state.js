@@ -8,7 +8,7 @@ class Counter extends React.Component {
 
         // setup default state
         this.state = {
-            count: 0
+            count: props.startingCounter
         }
     }
 
@@ -55,7 +55,11 @@ class Counter extends React.Component {
     }
 }
 
-ReactDOM.render(<Counter />, document.getElementById('app'));
+Counter.defaultProps = {
+    startingCounter: 0
+}
+
+ReactDOM.render(<Counter startingCounter={0}/>, document.getElementById('app'));
 
 // 1. Create three methods handleAddone ...
 // 2. Use console.log to print method name.

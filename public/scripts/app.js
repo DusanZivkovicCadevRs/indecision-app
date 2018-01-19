@@ -26,7 +26,7 @@ var IndecisionApp = function (_React$Component) {
 
         _this.state = {
             // options: ['Thing one', 'Thing two', 'Thing three']
-            options: []
+            options: props.options
         };
         return _this;
     }
@@ -75,10 +75,8 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var title = 'Indecision';
             var subtitle = 'Put your life in the hands of the computer!';
             return _jsx('div', {}, void 0, _jsx(Header, {
-                title: title,
                 subtitle: subtitle
             }), _jsx(Action, {
                 hasOptions: this.state.options.length > 0,
@@ -95,35 +93,42 @@ var IndecisionApp = function (_React$Component) {
     return IndecisionApp;
 }(React.Component);
 
-// .bind(obj) workout
-// const obj = {
-//     name: 'Viki',
-//     getName() {
-//         return this.name;
-//     }
-// };
+IndecisionApp.defaultProps = {
+    options: []
 
-// console.log(obj.getName());
+    // .bind(obj) workout
+    // const obj = {
+    //     name: 'Viki',
+    //     getName() {
+    //         return this.name;
+    //     }
+    // };
 
-// const getName = obj.getName.bind({name: 'Viki'});
-// console.log(getName());
+    // console.log(obj.getName());
 
-// must be Uppercase, because if lowercase, it will search for html element
-// class Header extends React.Component {
-//     // render must be defined!!!
-//     render() {
-//         return (
-//             <div>
-//                 <h1>{this.props.title}</h1>
-//                 <h2>{this.props.subtitle}</h2>
-//             </div>
-//         );
-//     }
-// }
+    // const getName = obj.getName.bind({name: 'Viki'});
+    // console.log(getName());
 
-var Header = function Header(props) {
+    // must be Uppercase, because if lowercase, it will search for html element
+    // class Header extends React.Component {
+    //     // render must be defined!!!
+    //     render() {
+    //         return (
+    //             <div>
+    //                 <h1>{this.props.title}</h1>
+    //                 <h2>{this.props.subtitle}</h2>
+    //             </div>
+    //         );
+    //     }
+    // }
+
+};var Header = function Header(props) {
     // render must be defined!!!
-    return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, props.title), _jsx('h2', {}, void 0, props.subtitle));
+    return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, props.title), props.subtitle && _jsx('h2', {}, void 0, props.subtitle));
+};
+
+Header.defaultProps = {
+    title: 'Indecision'
 };
 
 var Action = function Action(props) {
@@ -260,5 +265,8 @@ var AddOption = function (_React$Component2) {
 //     );
 // };
 
-ReactDOM.render(_jsx(IndecisionApp, {}), document.getElementById('app'));
 // ReactDOM.render(<User name="Dule" age={30} />, document.getElementById('app'));
+
+ReactDOM.render(_jsx(IndecisionApp, {
+    options: ['Option one', 'Option two']
+}), document.getElementById('app'));

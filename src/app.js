@@ -9,7 +9,7 @@ class IndecisionApp extends React.Component {
 
         this.state = {
             // options: ['Thing one', 'Thing two', 'Thing three']
-            options: []
+            options: props.options
         };
     }
 
@@ -50,11 +50,12 @@ class IndecisionApp extends React.Component {
     }
 
     render() {
-        const title = 'Indecision';
         const subtitle = 'Put your life in the hands of the computer!';
         return (
             <div>
-                <Header title={title} subtitle={subtitle} />
+                <Header
+                    subtitle={subtitle}
+                />
                 <Action
                     hasOptions={this.state.options.length > 0}
                     handlePick={this.handlePick}
@@ -69,6 +70,10 @@ class IndecisionApp extends React.Component {
             </div>
         );
     }
+}
+
+IndecisionApp.defaultProps = {
+    options: []
 }
 
 // .bind(obj) workout
@@ -102,9 +107,13 @@ const Header = (props) => {
     return (
         <div>
             <h1>{props.title}</h1>
-            <h2>{props.subtitle}</h2>
+            {props.subtitle && <h2>{props.subtitle}</h2>}
         </div>
     );
+}
+
+Header.defaultProps = {
+    title: 'Indecision'
 }
 
 const Action = (props) => {
@@ -240,5 +249,6 @@ class AddOption extends React.Component {
 //     );
 // };
 
-ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
 // ReactDOM.render(<User name="Dule" age={30} />, document.getElementById('app'));
+
+ReactDOM.render(<IndecisionApp options={['Option one', 'Option two']}/>, document.getElementById('app'));
