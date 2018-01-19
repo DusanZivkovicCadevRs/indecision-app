@@ -10,81 +10,48 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Counter = function (_React$Component) {
-    _inherits(Counter, _React$Component);
+var _ref = _jsx('h1', {}, void 0, 'VisibilityToggle');
 
-    function Counter(props) {
-        _classCallCheck(this, Counter);
+var _ref2 = _jsx('div', {}, void 0, _jsx('p', {}, void 0, 'This is text to be toggled with'));
 
-        var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
+// VisibilityToggle - render, consturctor, handleToggleVisibility
+// visibility -> false
 
-        _this.handleAddOne = _this.handleAddOne.bind(_this);
-        _this.handleMinusOne = _this.handleMinusOne.bind(_this);
-        _this.handleReset = _this.handleReset.bind(_this);
+var VisibilityToggle = function (_React$Component) {
+    _inherits(VisibilityToggle, _React$Component);
 
-        // setup default state
+    function VisibilityToggle(props) {
+        _classCallCheck(this, VisibilityToggle);
+
+        var _this = _possibleConstructorReturn(this, (VisibilityToggle.__proto__ || Object.getPrototypeOf(VisibilityToggle)).call(this, props));
+
+        _this.handleVisibilityToggle = _this.handleVisibilityToggle.bind(_this);
+
         _this.state = {
-            count: 0
+            visibility: false
         };
         return _this;
     }
 
-    _createClass(Counter, [{
-        key: 'handleAddOne',
-        value: function handleAddOne(props) {
-            // console.log('handleAddOne click event')
+    _createClass(VisibilityToggle, [{
+        key: 'handleVisibilityToggle',
+        value: function handleVisibilityToggle() {
             this.setState(function (oldState) {
                 return {
-                    count: oldState.count + 1
+                    visibility: !oldState.visibility
                 };
             });
-        }
-    }, {
-        key: 'handleMinusOne',
-        value: function handleMinusOne(props) {
-            // console.log('handleMinusOne click event');
-            this.setState(function (oldState) {
-                return {
-                    count: oldState.count - 1
-                };
-            });
-        }
-    }, {
-        key: 'handleReset',
-        value: function handleReset(props) {
-            // console.log('handleReset click event');
-
-            // NEXT TO WILL WORK BECAUSE OF VIRTUAL DOM
-            // BETTER TO PASS THE FUNCTION TO setState
-            this.setState(function () {
-                return { count: 0 };
-            });
-            this.setState(function () {
-                return { count: 0 };
-            });
-
-            // STATE CHANGING IS ASYNCHRONOUS!!! RESULT OF NEXT FNS WONT BE 1
-            // this.setState({ count: 0 }) 
-            // this.setState({ count: this.state.count + 1 });
         }
     }, {
         key: 'render',
         value: function render() {
-            return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, 'Counter: ', this.state.count), _jsx('button', {
-                onClick: this.handleAddOne
-            }, void 0, '+1'), _jsx('button', {
-                onClick: this.handleMinusOne
-            }, void 0, '-1'), _jsx('button', {
-                onClick: this.handleReset
-            }, void 0, '=0'));
+            return _jsx('div', {}, void 0, _ref, _jsx('button', {
+                onClick: this.handleVisibilityToggle
+            }, void 0, this.state.visibility ? 'Hide Text' : 'Show Text'), this.state.visibility && _ref2);
         }
     }]);
 
-    return Counter;
+    return VisibilityToggle;
 }(React.Component);
 
-ReactDOM.render(_jsx(Counter, {}), document.getElementById('app'));
-
-// 1. Create three methods handleAddone ...
-// 2. Use console.log to print method name.
-// 3. Wire up onClick & bind in the constructor.
+ReactDOM.render(_jsx(VisibilityToggle, {}), document.getElementById('app'));
