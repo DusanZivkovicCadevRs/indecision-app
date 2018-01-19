@@ -10,48 +10,225 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _ref = _jsx('h1', {}, void 0, 'VisibilityToggle');
+var IndecisionApp = function (_React$Component) {
+    _inherits(IndecisionApp, _React$Component);
 
-var _ref2 = _jsx('div', {}, void 0, _jsx('p', {}, void 0, 'This is text to be toggled with'));
+    function IndecisionApp(props) {
+        _classCallCheck(this, IndecisionApp);
 
-// VisibilityToggle - render, consturctor, handleToggleVisibility
-// visibility -> false
+        var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
-var VisibilityToggle = function (_React$Component) {
-    _inherits(VisibilityToggle, _React$Component);
-
-    function VisibilityToggle(props) {
-        _classCallCheck(this, VisibilityToggle);
-
-        var _this = _possibleConstructorReturn(this, (VisibilityToggle.__proto__ || Object.getPrototypeOf(VisibilityToggle)).call(this, props));
-
-        _this.handleVisibilityToggle = _this.handleVisibilityToggle.bind(_this);
+        _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
+        _this.handlePick = _this.handlePick.bind(_this);
 
         _this.state = {
-            visibility: false
+            options: ['Thing one', 'Thing two', 'Thing three']
+            // options: []
         };
         return _this;
     }
 
-    _createClass(VisibilityToggle, [{
-        key: 'handleVisibilityToggle',
-        value: function handleVisibilityToggle() {
-            this.setState(function (oldState) {
+    _createClass(IndecisionApp, [{
+        key: 'handleDeleteOptions',
+        value: function handleDeleteOptions() {
+            this.setState(function () {
                 return {
-                    visibility: !oldState.visibility
+                    options: []
                 };
             });
+        }
+        // In order of child to comunicate with parrent, pass function
+        // handleDeleteOptions
+
+    }, {
+        key: 'handlePick',
+        value: function handlePick() {
+            var randomNum = Math.floor(Math.random() * this.state.options.length);
+            var randomOption = this.state.options[randomNum];
+            return alert(randomOption);
+        }
+        // handlePick - pass down to Action and setup onClick - bind here
+        // randomly pick an opiton and alert it
+
+    }, {
+        key: 'render',
+        value: function render() {
+            var title = 'Indecision';
+            var subtitle = 'Put your life in the hands of the computer!';
+            return _jsx('div', {}, void 0, _jsx(Header, {
+                title: title,
+                subtitle: subtitle
+            }), _jsx(Action, {
+                hasOptions: this.state.options.length > 0,
+                handlePick: this.handlePick
+            }), _jsx(Options, {
+                options: this.state.options,
+                handleDeleteOptions: this.handleDeleteOptions
+            }), _ref);
+        }
+    }]);
+
+    return IndecisionApp;
+}(React.Component);
+
+// .bind(obj) workout
+// const obj = {
+//     name: 'Viki',
+//     getName() {
+//         return this.name;
+//     }
+// };
+
+// console.log(obj.getName());
+
+// const getName = obj.getName.bind({name: 'Viki'});
+// console.log(getName());
+
+// must be Uppercase, because if lowercase, it will search for html element
+
+
+var Header = function (_React$Component2) {
+    _inherits(Header, _React$Component2);
+
+    function Header() {
+        _classCallCheck(this, Header);
+
+        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+    }
+
+    _createClass(Header, [{
+        key: 'render',
+
+        // render must be defined!!!
+        value: function render() {
+            return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, this.props.title), _jsx('h2', {}, void 0, this.props.subtitle));
+        }
+    }]);
+
+    return Header;
+}(React.Component);
+
+var Action = function (_React$Component3) {
+    _inherits(Action, _React$Component3);
+
+    function Action() {
+        _classCallCheck(this, Action);
+
+        return _possibleConstructorReturn(this, (Action.__proto__ || Object.getPrototypeOf(Action)).apply(this, arguments));
+    }
+
+    _createClass(Action, [{
+        key: 'render',
+        value: function render() {
+            return _jsx('div', {}, void 0, _jsx('button', {
+                onClick: this.props.handlePick,
+                disabled: !this.props.hasOptions
+            }, void 0, 'What should I do?'));
+        }
+    }]);
+
+    return Action;
+}(React.Component);
+
+// passed data in, when it is instanced component called props
+
+var Options = function (_React$Component4) {
+    _inherits(Options, _React$Component4);
+
+    function Options() {
+        _classCallCheck(this, Options);
+
+        return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).apply(this, arguments));
+    }
+
+    _createClass(Options, [{
+        key: 'render',
+        value: function render() {
+            return _jsx('div', {}, void 0, _jsx('button', {
+                onClick: this.props.handleDeleteOptions
+            }, void 0, 'Remove All'), this.props.options.map(function (option, i) {
+                return _jsx(Option, {
+                    optionText: option
+                }, i);
+            }));
+        }
+    }]);
+
+    return Options;
+}(React.Component);
+
+// Option -> Option component here
+
+
+var Option = function (_React$Component5) {
+    _inherits(Option, _React$Component5);
+
+    function Option() {
+        _classCallCheck(this, Option);
+
+        return _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
+    }
+
+    _createClass(Option, [{
+        key: 'render',
+        value: function render() {
+            return _jsx('div', {}, void 0, 'Option: ', this.props.optionText);
+        }
+    }]);
+
+    return Option;
+}(React.Component);
+
+// 1. setup the form with text input and submit button
+// 2. wire up on submit
+// 3. handleAddOption -> fetch the value typed -> if value, then alert
+
+var _ref2 = _jsx('input', {
+    type: 'text',
+    name: 'option'
+});
+
+var _ref3 = _jsx('button', {}, void 0, 'Add Option');
+
+var AddOption = function (_React$Component6) {
+    _inherits(AddOption, _React$Component6);
+
+    function AddOption() {
+        _classCallCheck(this, AddOption);
+
+        return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
+    }
+
+    _createClass(AddOption, [{
+        key: 'handleAddOption',
+        value: function handleAddOption(e) {
+            e.preventDefault();
+            var option = e.target.elements.option.value.trim();
+            if (option) {
+                alert(option);
+                e.target.elements.option.value = '';
+            }
         }
     }, {
         key: 'render',
         value: function render() {
-            return _jsx('div', {}, void 0, _ref, _jsx('button', {
-                onClick: this.handleVisibilityToggle
-            }, void 0, this.state.visibility ? 'Hide Text' : 'Show Text'), this.state.visibility && _ref2);
+            return _jsx('form', {
+                onSubmit: this.handleAddOption
+            }, void 0, _ref2, _ref3);
         }
     }]);
 
-    return VisibilityToggle;
+    return AddOption;
 }(React.Component);
 
-ReactDOM.render(_jsx(VisibilityToggle, {}), document.getElementById('app'));
+// -- State is just an object --
+// -- App will aoutorerender with change of the state
+// 1. Setup default state object { count: 0 }
+// 2. Component rendered with default state values *
+// 3. Change state based on event
+// 4. Component re-rendered using new state values *
+// 5. Start again at 3
+
+var _ref = _jsx(AddOption, {});
+
+ReactDOM.render(_jsx(IndecisionApp, {}), document.getElementById('app'));
