@@ -102,6 +102,7 @@ class AddOption extends React.Component {
         const option = e.target.elements.option.value.trim();
         if (option) {
             alert(option);
+            e.target.elements.option.value = '';
         }
     }
 
@@ -114,5 +115,13 @@ class AddOption extends React.Component {
         );
     }
 }
+
+// -- State is just an object --
+// -- App will aoutorerender with change of the state
+// 1. Setup default state object { count: 0 }
+// 2. Component rendered with default state values *
+// 3. Change state based on event
+// 4. Component re-rendered using new state values *
+// 5. Start again at 3
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
