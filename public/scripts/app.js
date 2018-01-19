@@ -20,10 +20,11 @@ var IndecisionApp = function (_React$Component) {
 
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
+        _this.handleAddOption = _this.handleAddOption.bind(_this);
 
         _this.state = {
-            options: ['Thing one', 'Thing two', 'Thing three']
-            // options: []
+            // options: ['Thing one', 'Thing two', 'Thing three']
+            options: []
         };
         return _this;
     }
@@ -51,6 +52,25 @@ var IndecisionApp = function (_React$Component) {
         // randomly pick an opiton and alert it
 
     }, {
+        key: 'handleAddOption',
+        value: function handleAddOption(option) {
+            if (!option) {
+                return 'Enter valid value to add item';
+            } else if (this.state.options.indexOf(option) > -1) {
+                return 'This option already exists';
+            }
+
+            // console.log(option);
+            this.setState(function (prevState) {
+                // DO NOT MANIPULATE STATE IN SET STATE
+                // return ( {options: prevState.options.push(option) } )
+                // COMPUTE INSTEAD
+                return {
+                    options: prevState.options.concat(option)
+                };
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var title = 'Indecision';
@@ -64,7 +84,9 @@ var IndecisionApp = function (_React$Component) {
             }), _jsx(Options, {
                 options: this.state.options,
                 handleDeleteOptions: this.handleDeleteOptions
-            }), _ref);
+            }), _jsx(AddOption, {
+                handleAddOption: this.handleAddOption
+            }));
         }
     }]);
 
@@ -183,38 +205,49 @@ var Option = function (_React$Component5) {
 // 2. wire up on submit
 // 3. handleAddOption -> fetch the value typed -> if value, then alert
 
-var _ref2 = _jsx('input', {
+var _ref = _jsx('input', {
     type: 'text',
     name: 'option'
 });
 
-var _ref3 = _jsx('button', {}, void 0, 'Add Option');
+var _ref2 = _jsx('button', {}, void 0, 'Add Option');
 
 var AddOption = function (_React$Component6) {
     _inherits(AddOption, _React$Component6);
 
-    function AddOption() {
+    function AddOption(props) {
         _classCallCheck(this, AddOption);
 
-        return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
+        var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+
+        _this6.handleAddOption = _this6.handleAddOption.bind(_this6);
+
+        _this6.state = {
+            error: undefined
+        };
+        return _this6;
     }
 
     _createClass(AddOption, [{
         key: 'handleAddOption',
         value: function handleAddOption(e) {
             e.preventDefault();
+
             var option = e.target.elements.option.value.trim();
-            if (option) {
-                alert(option);
-                e.target.elements.option.value = '';
-            }
+            var error = this.props.handleAddOption(option);
+
+            e.target.elements.option.value = '';
+
+            this.setState(function () {
+                return { error: error };
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            return _jsx('form', {
+            return _jsx('div', {}, void 0, this.state.error && _jsx('p', {}, void 0, this.state.error), _jsx('form', {
                 onSubmit: this.handleAddOption
-            }, void 0, _ref2, _ref3);
+            }, void 0, _ref, _ref2));
         }
     }]);
 
@@ -228,7 +261,5 @@ var AddOption = function (_React$Component6) {
 // 3. Change state based on event
 // 4. Component re-rendered using new state values *
 // 5. Start again at 3
-
-var _ref = _jsx(AddOption, {});
 
 ReactDOM.render(_jsx(IndecisionApp, {}), document.getElementById('app'));
