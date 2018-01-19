@@ -32,7 +32,35 @@ var IndecisionApp = function (_React$Component) {
         return _this;
     }
 
+    // Lifecycles are reserved to cass React.Component
+    // first mount to DOM
+
+
     _createClass(IndecisionApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log('componentDidMount');
+            console.log('fetching data');
+        }
+
+        // fires up after component update
+
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            console.log('componentDidUpdate');
+            console.log('saving data');
+            // here we can access this.state & this.props
+        }
+
+        // before component goes away
+
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('componentWillUnmount');
+        }
+    }, {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
             // this.setState(() => {

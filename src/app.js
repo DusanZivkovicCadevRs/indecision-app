@@ -14,6 +14,25 @@ class IndecisionApp extends React.Component {
         };
     }
 
+    // Lifecycles are reserved to cass React.Component
+    // first mount to DOM
+    componentDidMount() {
+        console.log('componentDidMount');
+        console.log('fetching data');
+    }
+
+    // fires up after component update
+    componentDidUpdate(prevProps, prevState) {
+        console.log('componentDidUpdate');
+        console.log('saving data');
+        // here we can access this.state & this.props
+    }
+
+    // before component goes away
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+    }
+
     handleDeleteOptions() {
         // this.setState(() => {
         //     return {
