@@ -53,7 +53,19 @@ var Counter = function (_React$Component) {
         key: 'handleReset',
         value: function handleReset(props) {
             // console.log('handleReset click event');
-            this.setState({ count: 0 });
+
+            // NEXT TO WILL WORK BECAUSE OF VIRTUAL DOM
+            // BETTER TO PASS THE FUNCTION TO setState
+            this.setState(function () {
+                return { count: 0 };
+            });
+            this.setState(function () {
+                return { count: 0 };
+            });
+
+            // STATE CHANGING IS ASYNCHRONOUS!!! RESULT OF NEXT FNS WONT BE 1
+            // this.setState({ count: 0 }) 
+            // this.setState({ count: this.state.count + 1 });
         }
     }, {
         key: 'render',
