@@ -1,3 +1,5 @@
+// stateles functional component
+
 class IndecisionApp extends React.Component {
     constructor(props) {
         super(props);
@@ -83,57 +85,100 @@ class IndecisionApp extends React.Component {
 // console.log(getName());
 
 // must be Uppercase, because if lowercase, it will search for html element
-class Header extends React.Component {
+// class Header extends React.Component {
+//     // render must be defined!!!
+//     render() {
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <h2>{this.props.subtitle}</h2>
+//             </div>
+//         );
+//     }
+// }
+
+const Header = (props) => {
     // render must be defined!!!
-    render() {
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h2>{this.props.subtitle}</h2>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <h2>{props.subtitle}</h2>
+        </div>
+    );
 }
 
-class Action extends React.Component {
-    render() {
-        return (
-            <div>
-                <button
-                    onClick={this.props.handlePick}
-                    disabled={!this.props.hasOptions}
-                >
-                    What should I do?
+const Action = (props) => {
+    return (
+        <div>
+            <button
+                onClick={props.handlePick}
+                disabled={!props.hasOptions}
+            >
+                What should I do?
                 </button>
-            </div>
-        )
-    }
+        </div>
+    )
 }
+
+
+// class Action extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <button
+//                     onClick={this.props.handlePick}
+//                     disabled={!this.props.hasOptions}
+//                 >
+//                     What should I do?
+//                 </button>
+//             </div>
+//         )
+//     }
+// }
 
 // passed data in, when it is instanced component called props
+// class Options extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <button onClick={this.props.handleDeleteOptions}>Remove All</button>
+//                 {
+//                     this.props.options.map((option, i) => <Option key={i} optionText={option} />)
+//                 }
+//             </div>
+//         );
+//     }
+// }
 
-class Options extends React.Component {
-    render() {
-        return (
-            <div>
-                <button onClick={this.props.handleDeleteOptions}>Remove All</button>
-                {
-                    this.props.options.map((option, i) => <Option key={i} optionText={option} />)
-                }
-            </div>
-        );
-    }
+const Options = (props) => {
+    return (
+        <div>
+            <button disabled={props.options.length == 0} onClick={props.handleDeleteOptions}>Remove All</button>
+            {
+                props.options.map((option, i) => <Option key={i} optionText={option} />)
+            }
+        </div>
+    );
 }
 
+
 // Option -> Option component here
-class Option extends React.Component {
-    render() {
-        return (
-            <div>
-                Option: {this.props.optionText}
-            </div>
-        );
-    }
+// class Option extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 Option: {this.props.optionText}
+//             </div>
+//         );
+//     }
+// }
+
+const Option = (props) => {
+    return (
+        <div>
+            Option: {props.optionText}
+        </div>
+    );
 }
 
 // 1. setup the form with text input and submit button
@@ -184,4 +229,16 @@ class AddOption extends React.Component {
 // 4. Component re-rendered using new state values *
 // 5. Start again at 3
 
+// functional stateles component
+// faster than class Component 
+// const User = (props) => {
+//     return (
+//         <div>
+//             <p>Name:{props.name}</p>
+//             <p>Age:{props.age}</p>
+//         </div>
+//     );
+// };
+
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
+// ReactDOM.render(<User name="Dule" age={30} />, document.getElementById('app'));

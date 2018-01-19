@@ -10,6 +10,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// stateles functional component
+
 var IndecisionApp = function (_React$Component) {
     _inherits(IndecisionApp, _React$Component);
 
@@ -107,99 +109,84 @@ var IndecisionApp = function (_React$Component) {
 // console.log(getName());
 
 // must be Uppercase, because if lowercase, it will search for html element
+// class Header extends React.Component {
+//     // render must be defined!!!
+//     render() {
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <h2>{this.props.subtitle}</h2>
+//             </div>
+//         );
+//     }
+// }
 
+var Header = function Header(props) {
+    // render must be defined!!!
+    return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, props.title), _jsx('h2', {}, void 0, props.subtitle));
+};
 
-var Header = function (_React$Component2) {
-    _inherits(Header, _React$Component2);
+var Action = function Action(props) {
+    return _jsx('div', {}, void 0, _jsx('button', {
+        onClick: props.handlePick,
+        disabled: !props.hasOptions
+    }, void 0, 'What should I do?'));
+};
 
-    function Header() {
-        _classCallCheck(this, Header);
-
-        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
-    }
-
-    _createClass(Header, [{
-        key: 'render',
-
-        // render must be defined!!!
-        value: function render() {
-            return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, this.props.title), _jsx('h2', {}, void 0, this.props.subtitle));
-        }
-    }]);
-
-    return Header;
-}(React.Component);
-
-var Action = function (_React$Component3) {
-    _inherits(Action, _React$Component3);
-
-    function Action() {
-        _classCallCheck(this, Action);
-
-        return _possibleConstructorReturn(this, (Action.__proto__ || Object.getPrototypeOf(Action)).apply(this, arguments));
-    }
-
-    _createClass(Action, [{
-        key: 'render',
-        value: function render() {
-            return _jsx('div', {}, void 0, _jsx('button', {
-                onClick: this.props.handlePick,
-                disabled: !this.props.hasOptions
-            }, void 0, 'What should I do?'));
-        }
-    }]);
-
-    return Action;
-}(React.Component);
+// class Action extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <button
+//                     onClick={this.props.handlePick}
+//                     disabled={!this.props.hasOptions}
+//                 >
+//                     What should I do?
+//                 </button>
+//             </div>
+//         )
+//     }
+// }
 
 // passed data in, when it is instanced component called props
+// class Options extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <button onClick={this.props.handleDeleteOptions}>Remove All</button>
+//                 {
+//                     this.props.options.map((option, i) => <Option key={i} optionText={option} />)
+//                 }
+//             </div>
+//         );
+//     }
+// }
 
-var Options = function (_React$Component4) {
-    _inherits(Options, _React$Component4);
-
-    function Options() {
-        _classCallCheck(this, Options);
-
-        return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).apply(this, arguments));
-    }
-
-    _createClass(Options, [{
-        key: 'render',
-        value: function render() {
-            return _jsx('div', {}, void 0, _jsx('button', {
-                onClick: this.props.handleDeleteOptions
-            }, void 0, 'Remove All'), this.props.options.map(function (option, i) {
-                return _jsx(Option, {
-                    optionText: option
-                }, i);
-            }));
-        }
-    }]);
-
-    return Options;
-}(React.Component);
+var Options = function Options(props) {
+    return _jsx('div', {}, void 0, _jsx('button', {
+        disabled: props.options.length == 0,
+        onClick: props.handleDeleteOptions
+    }, void 0, 'Remove All'), props.options.map(function (option, i) {
+        return _jsx(Option, {
+            optionText: option
+        }, i);
+    }));
+};
 
 // Option -> Option component here
+// class Option extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 Option: {this.props.optionText}
+//             </div>
+//         );
+//     }
+// }
 
-
-var Option = function (_React$Component5) {
-    _inherits(Option, _React$Component5);
-
-    function Option() {
-        _classCallCheck(this, Option);
-
-        return _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).apply(this, arguments));
-    }
-
-    _createClass(Option, [{
-        key: 'render',
-        value: function render() {
-            return _jsx('div', {}, void 0, 'Option: ', this.props.optionText);
-        }
-    }]);
-
-    return Option;
-}(React.Component);
+var Option = function Option(props) {
+    return _jsx('div', {}, void 0, 'Option: ', props.optionText);
+};
 
 // 1. setup the form with text input and submit button
 // 2. wire up on submit
@@ -212,20 +199,20 @@ var _ref = _jsx('input', {
 
 var _ref2 = _jsx('button', {}, void 0, 'Add Option');
 
-var AddOption = function (_React$Component6) {
-    _inherits(AddOption, _React$Component6);
+var AddOption = function (_React$Component2) {
+    _inherits(AddOption, _React$Component2);
 
     function AddOption(props) {
         _classCallCheck(this, AddOption);
 
-        var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+        var _this2 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
 
-        _this6.handleAddOption = _this6.handleAddOption.bind(_this6);
+        _this2.handleAddOption = _this2.handleAddOption.bind(_this2);
 
-        _this6.state = {
+        _this2.state = {
             error: undefined
         };
-        return _this6;
+        return _this2;
     }
 
     _createClass(AddOption, [{
@@ -262,4 +249,16 @@ var AddOption = function (_React$Component6) {
 // 4. Component re-rendered using new state values *
 // 5. Start again at 3
 
+// functional stateles component
+// faster than class Component 
+// const User = (props) => {
+//     return (
+//         <div>
+//             <p>Name:{props.name}</p>
+//             <p>Age:{props.age}</p>
+//         </div>
+//     );
+// };
+
 ReactDOM.render(_jsx(IndecisionApp, {}), document.getElementById('app'));
+// ReactDOM.render(<User name="Dule" age={30} />, document.getElementById('app'));
