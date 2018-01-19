@@ -6,6 +6,7 @@ class IndecisionApp extends React.Component {
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
         this.handlePick = this.handlePick.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
+        this.handleDeleteOption = this.handleDeleteOption.bind(this);
 
         this.state = {
             // options: ['Thing one', 'Thing two', 'Thing three']
@@ -14,14 +15,27 @@ class IndecisionApp extends React.Component {
     }
 
     handleDeleteOptions() {
-        this.setState(() => {
-            return {
-                options: []
-            };
-        });
+        // this.setState(() => {
+        //     return {
+        //         options: []
+        //     };
+        // });
+
+        // const num = () => ({}) // this returns an object, so this transforms to:
+
+        this.setState(() => ({ options: [] }));
+
     }
     // In order of child to comunicate with parrent, pass function
     // handleDeleteOptions
+
+    handleDeleteOption(optioniToRemove) {
+        // console.log('hdo ' + option);
+        this.setState(prevState => ({
+            options: prevState.options.filter(option => option !== optioniToRemove)
+        }));
+    }
+
 
     handlePick() {
         const randomNum = Math.floor(Math.random() * this.state.options.length);
@@ -38,15 +52,17 @@ class IndecisionApp extends React.Component {
             return 'This option already exists';
         }
 
-        // console.log(option);
-        this.setState((prevState) => {
-            // DO NOT MANIPULATE STATE IN SET STATE
-            // return ( {options: prevState.options.push(option) } )
-            // COMPUTE INSTEAD
-            return {
-                options: prevState.options.concat(option)
-            }
-        });
+        // // console.log(option);
+        // this.setState((prevState) => {
+        //     // DO NOT MANIPULATE STATE IN SET STATE
+        //     // return ( {options: prevState.options.push(option) } )
+        //     // COMPUTE INSTEAD
+        //     return {
+        //         options: prevState.options.concat(option)
+        //     }
+        // });
+
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }))
     }
 
     render() {
@@ -63,6 +79,7 @@ class IndecisionApp extends React.Component {
                 <Options
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
+                    handleDeleteOption={this.handleDeleteOption}
                 />
                 <AddOption
                     handleAddOption={this.handleAddOption}
@@ -164,7 +181,13 @@ const Options = (props) => {
         <div>
             <button disabled={props.options.length == 0} onClick={props.handleDeleteOptions}>Remove All</button>
             {
-                props.options.map((option, i) => <Option key={i} optionText={option} />)
+                props.options.map((option, i) => (
+                    <Option
+                        key={i}
+                        optionText={option}
+                        handleDeleteOption={props.handleDeleteOption}
+                    />
+                ))
             }
         </div>
     );
@@ -186,6 +209,12 @@ const Option = (props) => {
     return (
         <div>
             Option: {props.optionText}
+            <button
+                onClick={(e) => {
+                    props.handleDeleteOption(props.optionText);
+                }}>
+                remove
+            </button>
         </div>
     );
 }
@@ -212,9 +241,9 @@ class AddOption extends React.Component {
 
         e.target.elements.option.value = '';
 
-        this.setState(() => {
-            return { error };
-        });
+        // this.setState(() => { return { error }; });
+
+        this.setState(() => ({ error }));
     }
 
     render() {
@@ -251,4 +280,4 @@ class AddOption extends React.Component {
 
 // ReactDOM.render(<User name="Dule" age={30} />, document.getElementById('app'));
 
-ReactDOM.render(<IndecisionApp options={['Option one', 'Option two']}/>, document.getElementById('app'));
+ReactDOM.render(<IndecisionApp options={['Option one', 'Option two']} />, document.getElementById('app'));

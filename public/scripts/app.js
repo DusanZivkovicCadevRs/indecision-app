@@ -23,6 +23,7 @@ var IndecisionApp = function (_React$Component) {
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
+        _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
 
         _this.state = {
             // options: ['Thing one', 'Thing two', 'Thing three']
@@ -34,15 +35,33 @@ var IndecisionApp = function (_React$Component) {
     _createClass(IndecisionApp, [{
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
+            // this.setState(() => {
+            //     return {
+            //         options: []
+            //     };
+            // });
+
+            // const num = () => ({}) // this returns an object, so this transforms to:
+
             this.setState(function () {
-                return {
-                    options: []
-                };
+                return { options: [] };
             });
         }
         // In order of child to comunicate with parrent, pass function
         // handleDeleteOptions
 
+    }, {
+        key: 'handleDeleteOption',
+        value: function handleDeleteOption(optioniToRemove) {
+            // console.log('hdo ' + option);
+            this.setState(function (prevState) {
+                return {
+                    options: prevState.options.filter(function (option) {
+                        return option !== optioniToRemove;
+                    })
+                };
+            });
+        }
     }, {
         key: 'handlePick',
         value: function handlePick() {
@@ -62,14 +81,18 @@ var IndecisionApp = function (_React$Component) {
                 return 'This option already exists';
             }
 
-            // console.log(option);
+            // // console.log(option);
+            // this.setState((prevState) => {
+            //     // DO NOT MANIPULATE STATE IN SET STATE
+            //     // return ( {options: prevState.options.push(option) } )
+            //     // COMPUTE INSTEAD
+            //     return {
+            //         options: prevState.options.concat(option)
+            //     }
+            // });
+
             this.setState(function (prevState) {
-                // DO NOT MANIPULATE STATE IN SET STATE
-                // return ( {options: prevState.options.push(option) } )
-                // COMPUTE INSTEAD
-                return {
-                    options: prevState.options.concat(option)
-                };
+                return { options: prevState.options.concat(option) };
             });
         }
     }, {
@@ -83,7 +106,8 @@ var IndecisionApp = function (_React$Component) {
                 handlePick: this.handlePick
             }), _jsx(Options, {
                 options: this.state.options,
-                handleDeleteOptions: this.handleDeleteOptions
+                handleDeleteOptions: this.handleDeleteOptions,
+                handleDeleteOption: this.handleDeleteOption
             }), _jsx(AddOption, {
                 handleAddOption: this.handleAddOption
             }));
@@ -173,7 +197,8 @@ var Options = function Options(props) {
         onClick: props.handleDeleteOptions
     }, void 0, 'Remove All'), props.options.map(function (option, i) {
         return _jsx(Option, {
-            optionText: option
+            optionText: option,
+            handleDeleteOption: props.handleDeleteOption
         }, i);
     }));
 };
@@ -190,7 +215,11 @@ var Options = function Options(props) {
 // }
 
 var Option = function Option(props) {
-    return _jsx('div', {}, void 0, 'Option: ', props.optionText);
+    return _jsx('div', {}, void 0, 'Option: ', props.optionText, _jsx('button', {
+        onClick: function onClick(e) {
+            props.handleDeleteOption(props.optionText);
+        }
+    }, void 0, 'remove'));
 };
 
 // 1. setup the form with text input and submit button
@@ -229,6 +258,8 @@ var AddOption = function (_React$Component2) {
             var error = this.props.handleAddOption(option);
 
             e.target.elements.option.value = '';
+
+            // this.setState(() => { return { error }; });
 
             this.setState(function () {
                 return { error: error };
