@@ -41,6 +41,18 @@ var IndecisionApp = function (_React$Component) {
         value: function componentDidMount() {
             console.log('componentDidMount');
             console.log('fetching data');
+            try {
+                var json = localStorage.getItem('options');
+                var options = JSON.parse(json);
+
+                if (options) {
+                    this.setState(function () {
+                        return { options: options };
+                    });
+                }
+            } catch (e) {
+                // Do nothing at all, if err
+            }
         }
 
         // fires up after component update
@@ -49,7 +61,11 @@ var IndecisionApp = function (_React$Component) {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
             console.log('componentDidUpdate');
-            console.log('saving data');
+            if (prevState.options.length !== this.state.options.length) {
+                console.log('saving data');
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem('options', json);
+            }
             // here we can access this.state & this.props
         }
 
@@ -219,11 +235,13 @@ var Action = function Action(props) {
 //     }
 // }
 
+var _ref = _jsx('p', {}, void 0, 'Please add an option to get started!');
+
 var Options = function Options(props) {
     return _jsx('div', {}, void 0, _jsx('button', {
         disabled: props.options.length == 0,
         onClick: props.handleDeleteOptions
-    }, void 0, 'Remove All'), props.options.map(function (option, i) {
+    }, void 0, 'Remove All'), props.options.length === 0 && _ref, props.options.map(function (option, i) {
         return _jsx(Option, {
             optionText: option,
             handleDeleteOption: props.handleDeleteOption
@@ -254,12 +272,12 @@ var Option = function Option(props) {
 // 2. wire up on submit
 // 3. handleAddOption -> fetch the value typed -> if value, then alert
 
-var _ref = _jsx('input', {
+var _ref2 = _jsx('input', {
     type: 'text',
     name: 'option'
 });
 
-var _ref2 = _jsx('button', {}, void 0, 'Add Option');
+var _ref3 = _jsx('button', {}, void 0, 'Add Option');
 
 var AddOption = function (_React$Component2) {
     _inherits(AddOption, _React$Component2);
@@ -285,20 +303,22 @@ var AddOption = function (_React$Component2) {
             var option = e.target.elements.option.value.trim();
             var error = this.props.handleAddOption(option);
 
-            e.target.elements.option.value = '';
-
             // this.setState(() => { return { error }; });
 
             this.setState(function () {
                 return { error: error };
             });
+
+            if (!error) {
+                e.target.elements.option.value = '';
+            }
         }
     }, {
         key: 'render',
         value: function render() {
             return _jsx('div', {}, void 0, this.state.error && _jsx('p', {}, void 0, this.state.error), _jsx('form', {
                 onSubmit: this.handleAddOption
-            }, void 0, _ref, _ref2));
+            }, void 0, _ref2, _ref3));
         }
     }]);
 
