@@ -27,7 +27,8 @@ var IndecisionApp = function (_React$Component) {
 
         _this.state = {
             // options: ['Thing one', 'Thing two', 'Thing three']
-            options: props.options
+            // options: props.options
+            options: []
         };
         return _this;
     }
@@ -39,8 +40,15 @@ var IndecisionApp = function (_React$Component) {
     _createClass(IndecisionApp, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            console.log('componentDidMount');
-            console.log('fetching data');
+            try {
+                var json = localStorage.getItem('options');
+                var options = JSON.parse(json);
+                if (options) {
+                    this.setState(function () {
+                        return { options: options };
+                    });
+                }
+            } catch (e) {}
         }
 
         // fires up after component update
@@ -48,8 +56,10 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate(prevProps, prevState) {
-            console.log('componentDidUpdate');
-            console.log('saving data');
+            if (prevState.options.length !== this.state.options.length) {
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem('options', json);
+            }
             // here we can access this.state & this.props
         }
 
@@ -145,36 +155,37 @@ var IndecisionApp = function (_React$Component) {
     return IndecisionApp;
 }(React.Component);
 
-IndecisionApp.defaultProps = {
-    options: []
+// IndecisionApp.defaultProps = {
+//     options: []
+// }
 
-    // .bind(obj) workout
-    // const obj = {
-    //     name: 'Viki',
-    //     getName() {
-    //         return this.name;
-    //     }
-    // };
+// .bind(obj) workout
+// const obj = {
+//     name: 'Viki',
+//     getName() {
+//         return this.name;
+//     }
+// };
 
-    // console.log(obj.getName());
+// console.log(obj.getName());
 
-    // const getName = obj.getName.bind({name: 'Viki'});
-    // console.log(getName());
+// const getName = obj.getName.bind({name: 'Viki'});
+// console.log(getName());
 
-    // must be Uppercase, because if lowercase, it will search for html element
-    // class Header extends React.Component {
-    //     // render must be defined!!!
-    //     render() {
-    //         return (
-    //             <div>
-    //                 <h1>{this.props.title}</h1>
-    //                 <h2>{this.props.subtitle}</h2>
-    //             </div>
-    //         );
-    //     }
-    // }
+// must be Uppercase, because if lowercase, it will search for html element
+// class Header extends React.Component {
+//     // render must be defined!!!
+//     render() {
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <h2>{this.props.subtitle}</h2>
+//             </div>
+//         );
+//     }
+// }
 
-};var Header = function Header(props) {
+var Header = function Header(props) {
     // render must be defined!!!
     return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, props.title), props.subtitle && _jsx('h2', {}, void 0, props.subtitle));
 };
@@ -285,13 +296,17 @@ var AddOption = function (_React$Component2) {
             var option = e.target.elements.option.value.trim();
             var error = this.props.handleAddOption(option);
 
-            e.target.elements.option.value = '';
+            // e.target.elements.option.value = '';
 
             // this.setState(() => { return { error }; });
 
             this.setState(function () {
                 return { error: error };
             });
+
+            if (!error) {
+                e.target.elements.option.value = '';
+            }
         }
     }, {
         key: 'render',
@@ -326,6 +341,7 @@ var AddOption = function (_React$Component2) {
 
 // ReactDOM.render(<User name="Dule" age={30} />, document.getElementById('app'));
 
-ReactDOM.render(_jsx(IndecisionApp, {
-    options: ['Option one', 'Option two']
-}), document.getElementById('app'));
+// ReactDOM.render(<IndecisionApp options={['Option one', 'Option two']} />, document.getElementById('app'));
+
+
+ReactDOM.render(_jsx(IndecisionApp, {}), document.getElementById('app'));
