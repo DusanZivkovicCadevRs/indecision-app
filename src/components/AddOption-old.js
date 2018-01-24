@@ -4,8 +4,13 @@ export default class AddOption extends React.Component {
     state = {
         error: undefined
     };
+    constructor(props) {
+        super(props);
+        this.handleAddOption = this.handleAddOption.bind(this);
 
-    handleAddOption = (e) => {
+    }
+
+    handleAddOption(e) {
         e.preventDefault();
         // console.log(testing);
         const option = e.target.elements.option.value.trim();
@@ -16,7 +21,7 @@ export default class AddOption extends React.Component {
         if (!error) {
             e.target.elements.option.value = '';
         }
-    };
+    }
 
     render() {
         return (
