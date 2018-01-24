@@ -12,6 +12,26 @@ class Counter extends React.Component {
         }
     }
 
+    componentWillMount(prevProps, prevState) {
+        try {
+            const json = localStorage.getItem('count');
+            const count = parseInt(JSON.parse(json), 10);
+            if (!isNaN(count)) {
+                this.setState(() => ({ count }));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    componentDidUpdate() {
+        try {
+            localStorage.setItem('count', this.state.count)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     handleAddOne(props) {
         // console.log('handleAddOne click event')
         this.setState((oldState) => {
@@ -59,7 +79,7 @@ Counter.defaultProps = {
     startingCounter: 0
 }
 
-ReactDOM.render(<Counter startingCounter={0}/>, document.getElementById('app'));
+ReactDOM.render(<Counter startingCounter={0} />, document.getElementById('app'));
 
 // 1. Create three methods handleAddone ...
 // 2. Use console.log to print method name.

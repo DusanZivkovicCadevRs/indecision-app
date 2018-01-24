@@ -1,0 +1,40 @@
+
+// 54
+// const template = <p>This is JSX</p>
+// ReactDOM.render(template, document.getElementById('app'));
+
+// 52
+// install -> import -> use
+// import validator from 'validator';
+
+// console.log(validator.isEmail('test'));
+ 
+// 47 - 52
+// // import './utils';
+// // import sub, { square, add } from './utils'; // named imports
+
+// // console.log('app.js is running.');
+
+// // console.log(square(4));
+// // console.log(add(4, 4));
+// // console.log(sub(100, 20));
+
+// // person.js
+// // named esport isAdult(18) - true if adult 
+// // named export canDring(18) - true if 21 oand over, otherwise false
+
+// // import isAdult and canDrink
+// // use both console.log()
+
+// import isSenior, {isAdult, canDrink} from './person';
+
+// console.log(isAdult(18));
+// console.log(isAdult(12));
+
+// console.log(canDrink(18));
+// console.log(canDrink(28));
+
+// // setting the default export and function
+// // gram the default and call it
+// console.log(isSenior(64));
+// console.log(isSenior(65));

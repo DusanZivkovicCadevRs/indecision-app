@@ -187,7 +187,7 @@ var IndecisionApp = function (_React$Component) {
 
 var Header = function Header(props) {
     // render must be defined!!!
-    return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, props.title), props.subtitle && _jsx('h2', {}, void 0, props.subtitle));
+    return _jsx('div', {}, void 0, _jsx('h1', {}, void 0, props.title, '!'), props.subtitle && _jsx('h2', {}, void 0, props.subtitle));
 };
 
 Header.defaultProps = {
