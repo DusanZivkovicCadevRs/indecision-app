@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Option = (props) => (
-    <div>
+    <div className='option'>
         Option: {props.optionText}
         <button
         className='button button--link'
